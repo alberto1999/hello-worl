@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="ProductosSet" EntityType="Model1.Store.ProductosSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CategoriasSet" EntityType="Model1.Store.CategoriasSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ProductosCategorias" Association="Model1.Store.ProductosCategorias">
+      <End Role="Productos" EntitySet="ProductosSet" />
+      <End Role="Categorias" EntitySet="CategoriasSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ProductosSet">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Valor" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Categoria" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CategoriasSet">
+    <Key>
+      <PropertyRef Name="IdCategoria" />
+    </Key>
+    <Property Name="IdCategoria" Type="int" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="ProductosCategorias">
+    <End Role="Productos" Type="Model1.Store.ProductosSet" Multiplicity="*" />
+    <End Role="Categorias" Type="Model1.Store.CategoriasSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="IdCategoria" />
+      </Principal>
+      <Dependent Role="Productos">
+        <PropertyRef Name="Categoria" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
